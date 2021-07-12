@@ -51,14 +51,17 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int maxArea(int[] height) {
+        //双指针方法
         int left = 0;
         int right = height.length - 1;
-        int result = 0;
+        int result = 0;//记录最大的面积
 
         while (left < right) {
+            //取左右指针所在相对小的高度，横轴距离为左右指针间距
             int area = Math.min(height[left], height[right]) * (right - left);
+            //不停更新result的值
             result = Math.max(area, result);
-
+            //需要总是移动高度较小的指针(若移动高度较大的指针，高仍然是短板，但是宽度是缩减了1，所以面积仍然会缩小)
             if (height[left] <= height[right]) {
                 left++;
             } else {
