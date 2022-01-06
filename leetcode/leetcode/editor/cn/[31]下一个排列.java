@@ -49,12 +49,17 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     /*例子：
+    算法：
+        1、先找出来最大索引m满足nums[m] < nums[m+1],如果不存在就翻转整个数组；
+        2、再找出来另一个最大索引n满足nums[n]>nums[m]；
+        3、交换nums[m]和nums[n]，
+        4、翻转nums[m+1]
      * nums = [1,2,7,4,3,1]
      * 从后往前寻找
-     * 第一个最大索引是 nums[1] = 2 ,nums[1]  = 2, nums[2] = 7,nums[1] < nums[1]
-     * 再找到第二个最大索引是 nums[4] = 3.
-     * 交换，nums = [1,3,7,4,2,1];
-     * 翻转，nums = [1,3,1,2,4,7]
+     * 满足nums[k] <nums[k+1]的一对数手机2,7，index分别为1,2，所以此时k=2
+     * 再找到第二个最大索引是 nums[4] = 3，3是从后往前遍历第一个大于nums[k]的值，所以为第二大索引l
+     * 交换nums[k]、nums[l]，nums = [1,3,7,4,2,1];
+     * 翻转索引k后面的串，即从下标为k+1的开始到最后一个索引值num.length-1，nums = [1,3,1,2,4,7]
      *
      * 时间复杂度：O(n)
      * 空间复杂度：O(1)
@@ -87,7 +92,7 @@ class Solution {
         }//交换nums[k]与nums[l]
         swap(nums, firstMaxIndex, secondMaxIndex);
         //翻转nums[k+1 : ]，k+1位置后面的数据
-        reverse(nums, firstMaxIndex + 1, nums.length - 1);
+        reverse(nums, firstMaxIndex + 1, nums. length - 1);
         return;
     }
 
