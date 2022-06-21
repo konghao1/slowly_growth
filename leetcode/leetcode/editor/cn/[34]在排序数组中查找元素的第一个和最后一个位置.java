@@ -77,6 +77,12 @@ class Solution {
         //若mid指向数组最后一个元素时，left就会越界,避免越界需要做left != nums.length
         //当target极小的时候，仍有nums[mid] > target，则right = mid - 1,
         //此时若mid指向数组第一个元素的时候，right就会越界，但是此时left不会越界，所以只需要判断==target就够了
+
+        //出现不在数列中的极大极小值时，
+        //极小值：right指针一直在向左缩进移动，而left指针不变，当right指针与left重合时(mid也重合)，若下一次移动
+        //right指针必然出界，所以由nums[left] == target 来判断nums最左侧是不是target,不是target就返回-1
+        //极大值：left指针一直在向右缩进移动，而right指针不变，当left与right重合时(mid也重合)，若下一次移动
+        //left指针必然出界，所以由left != nums.length 来判断
         if (left != nums.length && nums[left] == target) {
             return left;
         }
