@@ -108,7 +108,7 @@ class Solution {
             tempList.add(candidates[i]);
             //不断地减小target的数值进行递归
             /**
-             * 是否用startIndex，根据是否要重复选择nums中元素而决定，此题虽为组合但是可以重复选择nums中元素，故使用startIndex
+             * 是否用startIndex，根据是否要重复选择nums中元素而决定，此题虽为组合但是可以重复选择nums中元素，故不使用startIndex
              */
             process(candidates, target - candidates[i], res, tempList, i); // not i + 1 because we can reuse same elements
             //走完分支后的回溯，可以理解为回到上一层的父节点
