@@ -58,7 +58,10 @@ class Solution {
         return result;
     }*/
 
-        if (prices == null || prices.length == 0) {
+        /**
+         * 贪心算法
+         */
+        /*if (prices == null || prices.length == 0) {
             return 0;
         }
 
@@ -66,21 +69,48 @@ class Solution {
         int max = 0;
         int min = prices[0];
 
-        /**
+        *
          * 第i天的最大收益跟第i-1天的最大收益 之间的关系：
          * (1)最大收益不是第i天抛出获得的        --最大收益跟第i天的价格无关
          * (2)最大收益是在第i-1天前的某天买入，并且在第i天抛出的       --最大收益跟第i天的价格有关
          *
          * 第i天的最大收益即为：max = {前i-1天的最大收益 , 第i天的价格 - 前i-1天中最小价格}
          * 前i-1天中最小价格价格需要实时更新并记录
-         */
+
         for (int i = 1; i < prices.length; i++) {
             //price[i] - min 为这一天卖出股票可获得的最大利润
             max = Math.max(max, prices[i] - min);
             //min的初始化为数组第一个元素,遍历的时候取数组的每个元素作比较，找出来最小元素，当做股票买入的那天
             min = Math.min(min, prices[i]);
         }
-        return max;
+        return max;*/
+
+        /**
+         * 动态规划算法
+         */
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+
+        //dp[i][j]标识i天结束时候，持股状态为j时，手上最大现金数，其中j == 1时表示持股
+        //买入股票则现金数减少，卖出股票时则现金数增多，现金数等同于题目中的利润，即买入股票后卖出获得的差价
+        //dp[i][0] : i这一天不持有股票：1、昨天不持股，今天无操作    2、昨天持股，今天卖出(现金数增加)
+        //dp[i][1] : i这一天持有股票：1、昨天持有股票，今天无操作    2、昨天不持股，今天买入股票(只允许买入一次)
+        int[][] dp = new int[prices.length][2];
+
+        //初始化：第一天    不持股为0，持股需要减去第一天(i == 0)的股价
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+
+        //第二天开始遍历
+        for (int i = 1; i < prices.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]); //max(前一天不持股不操作，前一天持股今天卖出)
+            dp[i][1] = Math.max(dp[i - 1][1], -prices[i]); //max(前一天持股今天不操作，前一天不持股今天买入)
+        }
+        /**
+         * 全部交易结束后，dp[i][1]持股的收益一定是小宇dp[i][0]不持股的收益，所以结果统计不持股收益即可
+         */
+        return dp[prices.length - 1][0];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
