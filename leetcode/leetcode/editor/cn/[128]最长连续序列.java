@@ -57,10 +57,10 @@ class Solution {
          */
         for (int element : hashSet) {
             //true表示该元素可能为连续序列的起点元素
-            if (!set.contains(element - 1)) {
+            if (!hashSet.contains(element - 1)) {
                 int start = element;
                 //从起点元素开始一直寻找连续性
-                while (set.contains(start + 1)) {
+                while (hashSet.contains(start + 1)) {
                     start++;
                 }
                 //记录连续序列的最大个数
